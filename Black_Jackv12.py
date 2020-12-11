@@ -1,10 +1,11 @@
-import sys
+#  import sys
 import time
 import random
 import os
-from PIL import Image
+#  from PIL import Image
 from tkinter import *
-
+#  from flask import Flask, request, redirect, render_template, session, flash #Imports for Flask server
+#  from datetime import datetime
 
 
 class MainWindow:
@@ -15,16 +16,16 @@ class MainWindow:
         deck_new = decks_in_boot * list(range(52))  # creates the virtual decks of cards.  Ace=1, King=13
         random.shuffle(deck_new)  # suit order is spade,club,diamond, heart.
         print(deck_new)
-        random.shuffle(deck_new)
-        print(deck_new)
+        # random.shuffle(deck_new)
+        # print(deck_new)
         self.deck = deck_new  # Card 1 is Ace of spades.  Card 52 is King of hearts
-        #newList = [round(x / 10) for x in deck_new]      ####Testing
-        #self.deck = newList                             ####Testing
-        #self.deck[0] = 1                                 ##Testing
-        #self.deck[1] = 2                                 ##Testing
-        #self.deck[2] = 8                                 #Testing
-        #self.deck[3] = 2                                 #Testing
-        #self.deck[4] = 0                                 #Testing
+        #  newList = [round(x / 10) for x in deck_new]      ####Testing
+        #  self.deck = newList                             ####Testing
+        #  self.deck[0] = 1                                 ##Testing
+        #  self.deck[1] = 2                                 ##Testing
+        #  self.deck[2] = 8                                 #Testing
+        #  self.deck[3] = 2                                 #Testing
+        #  self.deck[4] = 0                                 #Testing
         self.dealer_total = 0  # Black Jack hand dealer score variable
         self.player_total = 0  # Black Jack hand player score variable
         self.split_player_total = 0
@@ -46,8 +47,8 @@ class MainWindow:
         self.clicks = 1
         self.bet1 = 5  # Initializing player bet
         self.win = StringVar()  #
-        self.lose = StringVar()  # Initializing announcments string variables
         self.win.set("")  #
+        self.lose = StringVar()  # Initializing announcements string variables
         self.lose.set("")  #
         self.split_win = StringVar()
         self.split_win.set("")
@@ -63,8 +64,8 @@ class MainWindow:
         self.dealer_label.grid(row=0, column=2)
         self.player_hand = []
         self.dealer_hand = []
-        #####Dealer Frames#####
 
+        # ####Dealer Frames#### #
         self.dealer_frameLL = Frame(main, bg="green", width=90, height=120)
         self.dealer_frameLL.grid(row=1, column=1)
         self.dealer_frameL = Frame(main, bg="green", width=90, height=120)
@@ -77,10 +78,9 @@ class MainWindow:
         self.dealer_frameR.grid(row=1, column=5)
         self.dealer_frameRR = Frame(main, bg="green", width=90, height=120)
         self.dealer_frameRR.grid(row=1, column=6)
+        # ########################## #
 
-        ############################
-        ##### Result Frames#####
-
+        # #### Result Frames#### #
         self.result_frame1 = Frame(main, bg="green")
         self.result_frame1.grid(row=2, column=2)
         self.result_frame2 = Frame(main, bg="green")
@@ -91,10 +91,9 @@ class MainWindow:
         self.result_frame4.grid(row=5, column=0)
         # self.result_frame4 = Frame(main, bg="green")
         # self.result_frame4.grid(row=5, column=0)
+        # ######################## #
 
-        ##########################
-        ##### Player Frames#####
-
+        # #### Player Frames#### #
         self.player_frameLL = Frame(main, bg="green", width=90, height=115)
         self.player_frameLL.grid(row=7, column=1)
         self.player_frameL = Frame(main, bg="green", width=90, height=115)
@@ -107,10 +106,9 @@ class MainWindow:
         self.player_frameR.grid(row=7, column=5)
         self.player_frameRR = Frame(main, bg="green", width=90, height=115)
         self.player_frameRR.grid(row=7, column=6)
+        # ####################### #
 
-        #########################
-        #####  BUTTON FRAMES #####
-
+        # ####  BUTTON FRAMES #### #
         self.button_frameLL = Frame(main, bg="green")
         self.button_frameLL.grid(row=8, column=0)
         self.button_frameL = Frame(main, bg="green")
@@ -133,14 +131,14 @@ class MainWindow:
         self.button_frameRR.grid(row=8, column=5)
         self.button_frameRRE = Frame(main, bg="green")
         self.button_frameRRE.grid(row=8, column=6)
+        # ###################### #
 
-        ########################
-        #####Get Card Images
+        # #### Get Card Images ####
         self.owd = os.getcwd()  # save the original working directory
         os.chdir('Cards')  # change directory to where the cards are
 
         self.my_cards = []
-        for f in os.listdir('.'):  # loading the card images for game play
+        for f in os.listdir('.'):  # loading the card images for game play.  '.' gets all files in current directory
             if f.endswith('.png'):
                 fn, fext = os.path.splitext(f)
                 print(fn + '  ' + fext)
@@ -148,7 +146,7 @@ class MainWindow:
         os.chdir(self.owd)
         #########################
 
-        ##### DEALER CARDS #####
+        # #### DEALER CARDS #####
         self.canvasdLL = Canvas(self.dealer_frameLL, width=90, height=120, bg='green')
         self.canvasdLL.pack()
         self.dealercardLL = self.canvasdLL.create_image(0, 0, anchor=NW, image=self.my_cards[53])
@@ -170,7 +168,7 @@ class MainWindow:
 
         #########################
 
-        ##### Results Labels##########
+        # #### Results Labels##########
 
         self.label_result1 = Label(self.result_frame2, textvariable=self.lose, bg="green", fg="red")
         self.label_result1.pack()
@@ -183,7 +181,7 @@ class MainWindow:
 
         ################################
 
-        ##### PLAYER CARDS #####
+        # #### PLAYER CARDS #####
 
         self.canvaspLL = Canvas(self.player_frameLL, width=90, height=120, bg='green')
         self.canvaspLL.pack(side=LEFT)
@@ -204,36 +202,34 @@ class MainWindow:
         self.canvaspRR.pack(side=LEFT)
         self.playercardRR = self.canvaspRR.create_image(0, 0, anchor=NW, image=self.my_cards[53])
         #####################
-        #####Player Split Cards
+        # #### Player Split Cards
 
-
-        #####Buttons#########
-
+        # #### Buttons #########
         self.bet_Button = Button(self.button_frameL, textvariable=self.hand_bet, bg="yellow",
                                  command=lambda: self.bet(self.hand_bet))  #lambda function uses self.bet(self.hand_bet)
         self.bet_Button.pack()                                          #to assign the result of the function to the
                                                                         #textvariable to be displayed
 
-        ######Hit button#####
+        # ##### Hit button #####
         self.hitbutton = Button(self.button_frameR, text="HIT", command=self.hit_func)
         self.hitbutton.pack(side=TOP)
 
-        #####Stay Button#####
+        # ####Stay Button#####
         self.stayButton = Button(self.button_frameRR, text="STAY",
                                  command=self.stay)  # creating a button on the toolbar
         self.stayButton.pack(side=TOP, padx=4, pady=2)
 
-        ######Cash Display#####
+        # #####Cash Display#####
         # self.cash = Label(self.button_frameLL, text="$" + str(self.pot), bg="white")
         self.cash = Label(self.button_frameLL, textvariable=self.pot, bg="white")
         self.cash.pack(side=LEFT)
 
-        #####New_Shuffle#####
+        # ####New_Shuffle#####
         self.new_shuffle_Button = Button(self.button_frameRRE, text="New Shuffle", bg = "yellow",
                                          command=self.new_shuffle)  # creating a button on the toolbar
         self.new_shuffle_Button.pack(side=BOTTOM, padx=4, pady=2)
 
-        #####Deal#####
+        # ####Deal#####
         self.deal_Button = Button(self.button_frameLC, text="DEAL", command=self.deal, bg="yellow")
         self.deal_Button.pack(side=BOTTOM, padx=4, pady=2)
 
@@ -344,7 +340,7 @@ class MainWindow:
             self.splayer_total = sum(self.splayer_hand)
             if 1 in self.splayer_hand:
                 splayer_ace_total = sum(self.splayer_hand) + 10
-                if splayer_ace_total <= 21 and splayer_ace_total > self.splayer_total:
+                if (splayer_ace_total <= 21) and (splayer_ace_total > self.splayer_total):
                     self.splayer_total = splayer_ace_total
             print(self.splayer_total, " split Player total")
 
@@ -393,7 +389,7 @@ class MainWindow:
         self.hitbutton["bg"] = "white"
         self.stayButton["bg"] = "white"
 
-        #####Split Player Frames#####
+        ##### Split Player Frames #####
         self.player_sframeLL = Frame(root, bg="green", width=90, height=115)
         self.player_sframeLL.grid(row=9, column=1)
         self.player_sframeL = Frame(root, bg="green", width=90, height=115)
@@ -411,16 +407,16 @@ class MainWindow:
         self.split_result_frameb = Frame(root, bg="green")
         self.split_result_frameb.grid(row=11, column=4)
 
-        #####Split_hitButton#####
+        # #### Split_hitButton #####
         self.split_hitbutton = Button(self.button_frameR, text="HIT",fg="green",bg="yellow",highlightbackground="red", command=self.split_hit_func)
         self.split_hitbutton.pack(side=BOTTOM)
 
-        #####Split stay Button#####
+        # #### Split stay Button #####
         self.split_stayButton = Button(self.button_frameRR, text="STAY",bg="yellow",
                                        command=self.split_stay)  # creating a button on the toolbar
         self.split_stayButton.pack(side=BOTTOM, padx=4, pady=2)
 
-        #####Split Result Label#####
+        # #### Split Result Label #####
         self.split_result_label = Label(self.split_result_frame, textvariable=self.split_win, bg="green", fg="white")
         self.split_result_label.pack()
 
@@ -428,7 +424,7 @@ class MainWindow:
         self.split_result_labelb.pack()
 
 
-        #####Player Split Cards
+        # #### Player Split Cards
         self.scanvaspLL = Canvas(self.player_sframeLL, width=90, height=120, bg='green')
         self.scanvaspLL.pack(side=LEFT)
         self.splayercardLL = self.scanvaspLL.create_image(0, 0, anchor=NW, image=self.my_cards[self.card_b_face])
@@ -499,7 +495,7 @@ class MainWindow:
             self.deck.pop(0)
 
     def split_player_check(self):
-        if self.split_hand_alive:#
+        if self.split_hand_alive:
 
             self.dealer_takes_cards()
 
@@ -564,7 +560,6 @@ class MainWindow:
 
     def you_push_player(self):
         self.win.set("PUSH!!!")
-        #self.lose.set("PUSH!!!")
         self.let_deal = True
         self.no_more_bets = False
         print(self.money, "Player Cash")
@@ -618,13 +613,13 @@ class MainWindow:
             print(self.splayer_hand, "split Player hand")
             self.deck.pop(0)
 
-    def cash_update_lose(self,pot,bet):
+    def cash_update_lose(self, pot, bet):
         a = pot
         a_split = int(a.split("$")[1])
         b = a_split - bet
         return b
 
-    def cash_update_win(self,pot,bet):
+    def cash_update_win(self, pot, bet):
 
         a = pot
         a_split = int(a.split("$")[1])
@@ -658,9 +653,7 @@ class MainWindow:
             self.hitbutton["bg"] = "yellow"
             self.stayButton["bg"] = "yellow"
 
-
-
-        if self.let_deal == True:
+        if self.let_deal:
             self.stay_clicks = 0
             print(self.money, "Player cash")
             self.let_deal = False
@@ -673,7 +666,7 @@ class MainWindow:
 
             self.canvaspLL.itemconfig(self.playercardLL, image=self.my_cards[self.deck[0]])
             self.player_hand.append((self.deck[0] % 13) + 1)
-            card_a = (self.deck[0] % 13) + 1        #saving card for split check
+            card_a = (self.deck[0] % 13) + 1        # saving card for split check
             self.card_score_adjust(self.player_hand)
 
             self.deck.pop(0)
@@ -686,21 +679,18 @@ class MainWindow:
 
             self.canvaspL.itemconfig(self.playercardL, image=self.my_cards[self.deck[0]])
             self.player_hand.append((self.deck[0] % 13) + 1)
-            self.card_b = (self.deck[0] % 13) + 1    #saving card for split check
+            self.card_b = (self.deck[0] % 13) + 1    # saving card for split check
             self.card_b_face = self.deck[0]  # saving for face of split card
-
 
             self.card_score_adjust(self.player_hand)
             print(self.player_hand, "Player hand")
             self.deck.pop(0)
-
 
             self.canvasdL.itemconfig(self.dealercardL, image=self.my_cards[52])  # displaying back of card for dealer
             self.dealer_down_card = self.deck[0]  # recording dealer's down card
             self.dealer_hand.append((self.deck[0] % 13) + 1)
             self.card_score_adjust(self.dealer_hand)
             self.deck.pop(0)
-
 
             if sum(self.player_hand) == 11 and 1 not in self.player_hand:
                 self.double_check = True
@@ -724,9 +714,10 @@ class MainWindow:
         dealer_ace_total = 0
         print(self.dealer_hand, "Dealer hand")
 
+        # ##### TODO: Move dealer Hit Logic 1 to 8 into a single function that takes an int numberDealerHit
         if 1 in self.dealer_hand:
             dealer_ace_total = self.dealer_total + 10
-        if dealer_ace_total <= 17 and self.dealer_total < 17:  #dealer must hit a soft 17
+        if dealer_ace_total <= 17 and self.dealer_total < 17:  # dealer must hit a soft 17
             root.update()
             time.sleep(.5)
             self.canvasdLC.itemconfig(self.dealercardLC, image=self.my_cards[self.deck[0]])  # dealer hit 1
@@ -816,32 +807,34 @@ class MainWindow:
                     self.player_total = sum(self.player_hand)
                     if 1 in self.player_hand:
                         player_ace_total = sum(self.player_hand) + 10
-                        if player_ace_total <= 21 and player_ace_total > self.player_total:
+                        if (player_ace_total <= 21) and player_ace_total > self.player_total:
                             self.player_total = player_ace_total
                     print(self.player_total, "Player total")
 
-
-                    if self.player_total <= 21 or self.split_hand_alive:
+                    if (self.player_total <= 21) or self.split_hand_alive:
                         self.dealer_takes_cards()
 
-
-                        ####################END DEALER HITS#########################
-                        if self.dealer_total > self.player_total and self.dealer_total <= 21:
+                        # ################### END DEALER HITS ######################## #
+                        if self.dealer_total > self.player_total and (self.dealer_total <= 21):
                             self.you_lose_player()
 
-                        elif self.dealer_total < self.player_total and self.player_total <= 21:
+                        elif self.dealer_total < self.player_total and (self.player_total <= 21):
                             self.you_win_player()
 
-                        elif self.dealer_total > 21 and self.player_total<= 21:
+                        elif (self.dealer_total > 21) and (self.player_total <= 21):
                             self.you_win_player()
 
-                        elif self.dealer_total == self.player_total and self.dealer_total <= 21:
+                        elif self.dealer_total == self.player_total and (self.dealer_total <= 21):
                             self.you_push_player()
 
     def bet(self, x):
         """function to define the bet amount.  This has a minimum bet
         of 5 and a maximum of 25, uses the mod method to cycle through
         bet ammounts"""
+
+        # TODO: Modify bet buttons, change to two buttons labeled +bet and -bet, same basic logic wrap around at max bet
+        #  and zero.  Change logic so that self.bet1 = clicks *5, get rid of the elifs
+
         if self.no_more_bets is not True:
             self.clicks = self.clicks + 1
             clicks = (self.clicks % 10)
@@ -876,9 +869,6 @@ class MainWindow:
                 x.set("Bet: $50")
                 self.bet1 = 50
 
-            # print(clicks, ' ', self.bet1)  # sanity check to make sure bet tracks with clicks
-            # self.clicks = clicks
-
     def hit_func(self):
         if self.split_check:
             self.split_Button.destroy()
@@ -895,15 +885,15 @@ class MainWindow:
                         self.canvaspLC.itemconfig(self.playercardLC, image=self.my_cards[self.deck[0]])
                         self.player_hit()
 
-                    elif self.hit_card == 2:# and self.split_check == False:
+                    elif self.hit_card == 2:  # and self.split_check == False:
                         self.canvaspRC.itemconfig(self.playercardRC, image=self.my_cards[self.deck[0]])
                         self.player_hit()
 
-                    elif self.hit_card == 3:# and self.split_check == False:
+                    elif self.hit_card == 3:  # and self.split_check == False:
                         self.canvaspR.itemconfig(self.playercardR, image=self.my_cards[self.deck[0]])
                         self.player_hit()
 
-                    elif self.hit_card == 4:# and self.split_check == False:
+                    elif self.hit_card == 4:  # and self.split_check == False:
                         self.canvaspRR.itemconfig(self.playercardRR, image=self.my_cards[self.deck[0]])
                         self.player_hit()
 
